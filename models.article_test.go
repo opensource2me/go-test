@@ -25,3 +25,31 @@ func TestGetAllArticles(t *testing.T) {
 		}
 	}
 }
+
+// Test the function that fetche an Article by its ID
+func TestGetArticleByID(t *testing.T) {
+	a, err := getArticleByID(1)
+
+	if err != nil || a.ID != 1 || a.Title != "Article 1" || a.Content != "Article 1 body" {
+		t.Fail()
+	}
+}
+
+// Test the function that creates a new article
+func TestCreateNewArticle(t *testing.T) {
+	// get the original count of articles
+	originalLength := len(getAllArticles())
+
+	// add another article
+	a, err := createNewArticle("New test title", "New test content")
+
+	// get the new count of articles
+	allArticles := getAllArticles()
+	newLength := len(allArticles)
+
+	if err != nil || newLength != originalLength+1 ||
+		a.Title != "New test title" || a.Content != "New test content" {
+
+		t.Fail()
+	}
+}
